@@ -10,8 +10,10 @@ public class GoblinSpawner : MonoBehaviour {
 	{
 		if (globalVariables.playerShouldRespawn == true) {
 			globalVariables.playerState.SetStats(goblinGenerator.Generate(globalVariables.playerState.GetStats()));
+			globalVariables.landingPosition = globalVariables.player.transform.position;
 			globalVariables.player.transform.position = globalVariables.catapultPosition;
 			globalVariables.playerShouldRespawn = false;
+			StartCoroutine(globalVariables.player.GetComponent<Controller2D>().Fly());
 		}
 	}
 }

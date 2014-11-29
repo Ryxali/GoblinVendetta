@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class PlayerState : Hitpoints {
-	GoblinStats stats;
+	public GoblinStats stats;
 
 	public void SetStats (GoblinStats s)
 	{
