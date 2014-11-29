@@ -9,7 +9,6 @@ public class PeasantAI : MonoBehaviour {
 	public float jumpForce = 500;
 	public float speed = 100;
 	public float acceleration = 10;
-	public GlobalVariables globalVariables;
 	
 	// Use this for initialization
 	void Start () {
@@ -19,7 +18,7 @@ public class PeasantAI : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{	
-		float difference = transform.position.x - globalVariables.GetPlayerPos();
+		float difference = transform.position.x - GlobalVariables.vars.GetPlayerPos();
 		if (difference > 0)
 			direction = -1;
 		else 
