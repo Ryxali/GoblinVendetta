@@ -3,6 +3,7 @@ using System.Collections;
 //[RequireComponent(Controller2D)]
 public class FireController : MonoBehaviour {
 
+	public AudioClip[] ShootSound;
 	public GameObject projectile;
 	public float recoil = 8;
 	public float projectileSpeed = 8;
@@ -24,6 +25,7 @@ public class FireController : MonoBehaviour {
 			if((Screen.width / 2 - Input.mousePosition.x) > 0 ) {
 				t = 1;
 			}
+			PlayShootSound();
 			force.x = recoil * t;
 			transform.rigidbody2D.AddRelativeForce(force);
 			force.x = projectileSpeed * -t;
@@ -45,6 +47,7 @@ public class FireController : MonoBehaviour {
 		//force.y = recoil;
 		//transform.rigidbody2D.AddRelativeForce(force);
 		force.y = -projectileSpeed;
+		PlayShootSound ();
 		for(int i = 0; i < projectiles; ++i) {
 			
 			GameObject o = (GameObject)Instantiate(projectile);
@@ -53,5 +56,10 @@ public class FireController : MonoBehaviour {
 			
 			o.rigidbody2D.velocity = force;
 		}
+	}
+
+	void PlayShootSound()
+	{
+		audio.PlayOneShot(ShootSound[Random.Range(0,ShootSound.Length)]);
 	}
 }
