@@ -19,11 +19,11 @@ public class GoblinStats {
 
 	public GoblinStats (GoblinStats stats)
 	{
-		this.speed = stats.speed;
-		this.height = stats.height;
-		this.jumpforce = stats.jumpforce;
-		this.hp = stats.hp;
-		this.dmg = stats.dmg;
-		this.description = stats.description;
+		speed = stats.speed;
+		height = stats.height;
+		jumpforce = stats.jumpforce;
+		hp = stats.hp;
+		dmg = stats.dmg;
+		description = stats.description;
 	}
 }
