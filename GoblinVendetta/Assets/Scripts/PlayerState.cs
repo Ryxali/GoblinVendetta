@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class PlayerState : Hitpoints {
-	GoblinStats stats;
+	public GoblinStats stats = new GoblinStats(1,1,1,1,1,"lol");
 
 	public void SetStats (GoblinStats s)
 	{
@@ -12,6 +12,10 @@ public class PlayerState : Hitpoints {
 	public GoblinStats GetStats ()
 	{
 		return stats;
+	}
+
+	public override void Die() {
+		GlobalVariables.vars.playerShouldRespawn = true;
 	}
 
 	// Use this for initialization

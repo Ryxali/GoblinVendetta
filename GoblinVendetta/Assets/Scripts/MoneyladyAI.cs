@@ -19,8 +19,6 @@ public class MoneyladyAI : MonoBehaviour {
 	public float maxAngle = 30;
 	public float angleRadius;
 	public Vector2 offset;
-	
-	private GlobalVariables globalVariables;
 
 	private Vector3 minEuler;
 	private Vector3 maxEuler;
@@ -29,7 +27,6 @@ public class MoneyladyAI : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		globalVariables = GameObject.FindObjectOfType<GlobalVariables> ();
 	}
 	
 	// Update is called once per frame
@@ -54,7 +51,7 @@ public class MoneyladyAI : MonoBehaviour {
 			lastToss = Time.time;
 		}
 		
-		float difference = transform.position.x - globalVariables.GetPlayerPos();
+		float difference = transform.position.x - GlobalVariables.vars.GetPlayerPos();
 		if (difference > 0)
 			direction = -1;
 		else 
