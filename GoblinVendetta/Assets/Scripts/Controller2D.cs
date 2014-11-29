@@ -72,7 +72,7 @@ public class Controller2D : MonoBehaviour {
 				curVel.y = jumpForce;
 			} else if(!doubleJumped) {
 				doubleJumped = true;
-				curVel.y = jumpForce/2;
+				curVel.y += jumpForce/2;
 				fController.FireDown();
 			}
 		}
