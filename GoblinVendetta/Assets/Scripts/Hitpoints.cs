@@ -6,5 +6,11 @@ public class Hitpoints : MonoBehaviour {
 	public virtual void Hit (int damage)
 	{
 		hp -= damage;
+		if (hp <= 0)
+			Die ();
+	}
+
+	public virtual void Die() {
+		Destroy (gameObject);
 	}
 }

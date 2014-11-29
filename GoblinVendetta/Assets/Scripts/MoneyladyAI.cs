@@ -20,7 +20,7 @@ public class MoneyladyAI : MonoBehaviour {
 	public float angleRadius;
 	public Vector2 offset;
 	
-	public GlobalVariables globalVariables;
+	private GlobalVariables globalVariables;
 
 	private Vector3 minEuler;
 	private Vector3 maxEuler;
@@ -29,7 +29,7 @@ public class MoneyladyAI : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-
+		globalVariables = GameObject.FindObjectOfType<GlobalVariables> ();
 	}
 	
 	// Update is called once per frame
