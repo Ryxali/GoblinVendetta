@@ -39,6 +39,7 @@ public class PlayerState : Hitpoints {
 	public override void Die() {
 		audio.PlayOneShot(DeathSound[Random.Range(0,DeathSound.Length)]);
 		GlobalVariables.vars.MusicDeath = true;
+		GlobalVariables.vars.BossMusicAlive = false; 
 		GlobalVariables.vars.guitext.text = "STOPPA LÅTEN";
 		GlobalVariables.vars.playerShouldRespawn = true;
 	}

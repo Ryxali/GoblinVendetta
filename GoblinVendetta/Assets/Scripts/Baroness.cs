@@ -16,7 +16,17 @@ public class Baroness : Hitpoints {
 	public float speed, whirlSpeed, acceleration;
 
 	public FeetCollider feet;
+	public AudioSource BaronessWhirlwindSound;
+	public AudioClip[] BaronessLungeSound;
+	public AudioClip[] BaronessDeathSound;
+
 	//bool Eprincess = false;
+
+	public override void Die (){
+		audio.PlayOneShot(BaronessDeathSound[Random.Range(0,BaronessDeathSound.Length)]);
+		GlobalVariables.vars.BossMusicAlive = false;
+		base.Die ();
+		}
 
 	void OnCollisionEnter2D (Collision2D other)
 	{
@@ -87,6 +97,8 @@ public class Baroness : Hitpoints {
 	IEnumerator Whirlwind ()
 	{
 		yield return null;
+		BaronessWhirlwindSound.Play ();
+
 		sprite.SetTrigger ("Whirlwind_Begin");
 		for (int i = 0; i < 5; i++) {
 			Debug.Log("Woh");
@@ -112,12 +124,14 @@ public class Baroness : Hitpoints {
 			yield return null;
 		}
 		state = State.normal;
+		BaronessWhirlwindSound.Stop ();
 		sprite.SetTrigger ("Whirlwind_End");
 		yield return null;
 	}
 
 	IEnumerator Lunge(int d)
 	{
+		audio.PlayOneShot(BaronessLungeSound[Random.Range(0,BaronessLungeSound.Length)]);
 		sprite.SetTrigger ("Dash_Begin");
 		Vector2 vel = rigidbody2D.velocity;
 		vel.x = lungeForce * d;
@@ -129,4 +143,5 @@ public class Baroness : Hitpoints {
 		sprite.SetTrigger ("Dash_End");
 		yield return null;
 	}
+
 }

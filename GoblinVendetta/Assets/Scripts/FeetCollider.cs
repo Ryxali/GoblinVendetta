@@ -9,6 +9,7 @@ public class FeetCollider : MonoBehaviour {
 	private bool feetTouching = false;
 	void Update() {
 		isGrounded = feetTouching && Mathf.Approximately(body.velocity.y, 0);
+		GlobalVariables.vars.Footsteps = isGrounded;
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
