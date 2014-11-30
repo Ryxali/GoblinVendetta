@@ -4,6 +4,7 @@ using System.Collections;
 public class Baroness : Hitpoints {
 	enum State {normal, whirlwind, lunge};
 	State state = State.normal;
+	public Animator sprite;
 	public int lungeDistance;
 	public float lungeForce, jumpForce;
 	public int whirlDmg, lungeDmg;
@@ -86,6 +87,7 @@ public class Baroness : Hitpoints {
 	IEnumerator Whirlwind ()
 	{
 		yield return null;
+		sprite.SetTrigger ("Whirlwind_Begin");
 		for (int i = 0; i < 5; i++) {
 			Debug.Log("Woh");
 			while (!feet.isGrounded)
@@ -108,11 +110,13 @@ public class Baroness : Hitpoints {
 			yield return null;
 		}
 		state = State.normal;
+		sprite.SetTrigger ("Whirlwind_End");
 		yield return null;
 	}
 
 	IEnumerator Lunge(int d)
 	{
+		sprite.SetTrigger ("Dash_Begin");
 		Vector2 vel = rigidbody2D.velocity;
 		vel.x = lungeForce * d;
 		rigidbody2D.velocity = vel;
@@ -120,6 +124,7 @@ public class Baroness : Hitpoints {
 		if (state != State.whirlwind)
 			state = State.normal;
 		currentSpeed = 0;
+		sprite.SetTrigger ("Dash_End");
 		yield return null;
 	}
 }
