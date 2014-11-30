@@ -9,6 +9,7 @@ public class PeasantAI : MonoBehaviour {
 	public float jumpForce = 500;
 	public float speed = 100;
 	public float acceleration = 10;
+	public PeasantStrike strike;
 	
 	// Use this for initialization
 	void Start () {
@@ -23,6 +24,11 @@ public class PeasantAI : MonoBehaviour {
 			direction = -1;
 		else 
 			direction = 1;
+		Vector3 nPos = new Vector3 ();
+		nPos.x = strike.transform.position.x * direction;
+		nPos.y = strike.transform.position.y;
+		nPos.z = strike.transform.position.z;
+		strike.transform.position = nPos;
 		
 		currentSpeed += acceleration * Time.deltaTime * direction;
 		
