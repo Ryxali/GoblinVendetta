@@ -40,6 +40,7 @@ public class PlayerState : Hitpoints {
 		audio.PlayOneShot(DeathSound[Random.Range(0,DeathSound.Length)]);
 		GlobalVariables.vars.MusicDeath = true;
 		GlobalVariables.vars.BossMusicAlive = false; 
+		GlobalVariables.vars.BossMusicPlaying = false;
 		GlobalVariables.vars.guitext.text = "STOPPA LÅTEN";
 		GlobalVariables.vars.playerShouldRespawn = true;
 	}

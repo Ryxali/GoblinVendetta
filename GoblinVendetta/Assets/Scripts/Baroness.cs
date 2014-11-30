@@ -27,6 +27,7 @@ public class Baroness : Hitpoints {
 		GameObject o = (GameObject)Instantiate (gore);
 		o.transform.position = transform.position;
 		GlobalVariables.vars.BossMusicAlive = false;
+		GlobalVariables.vars.BaronessIsDead = true;
 		base.Die ();
 		}
 

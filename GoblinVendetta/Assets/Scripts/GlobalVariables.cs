@@ -19,6 +19,8 @@ public class GlobalVariables : MonoBehaviour {
 	public GameObject spawnFolder;
 	public Camera cam;
 	public bool Footsteps = false;
+	public bool BossMusicPlaying = false;
+	public bool BaronessIsDead = false; 
 
 	public float GetPlayerPos()
 	{

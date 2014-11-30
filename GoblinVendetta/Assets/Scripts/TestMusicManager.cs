@@ -24,6 +24,7 @@ public class TestMusicManager : MonoBehaviour {
 
 		if(GlobalVariables.vars.MusicDeath == true){
 			PaybackTime.Stop();
+			HaremOfDread.Stop ();
 			DeathTheme.PlayDelayed(0.5f);
 			GlobalVariables.vars.MusicDeath = false;
 			StartCoroutine(test());
@@ -31,6 +32,7 @@ public class TestMusicManager : MonoBehaviour {
 
 		if(GlobalVariables.vars.BossMusic == true){
 			PaybackTime.Stop();
+			DeathTheme.Stop ();
 			HaremOfDread.Play();
 			GlobalVariables.vars.BossMusic = false;
 			StartCoroutine(test2());
@@ -56,7 +58,9 @@ public class TestMusicManager : MonoBehaviour {
 			}
 			yield return null;
 		}
-		PaybackTime.Play ();
+		if (GlobalVariables.vars.BaronessIsDead == true) {
+						PaybackTime.Play ();
+				}
 		yield return null;
 	}
 }
