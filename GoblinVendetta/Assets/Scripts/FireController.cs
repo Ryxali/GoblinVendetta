@@ -60,6 +60,7 @@ public class FireController : MonoBehaviour {
 
 	void PlayShootSound()
 	{
-		audio.PlayOneShot(ShootSound[Random.Range(0,ShootSound.Length)]);
+		if(ShootSound.Length > 0)
+			audio.PlayOneShot(ShootSound[Random.Range(0,ShootSound.Length)]);
 	}
 }

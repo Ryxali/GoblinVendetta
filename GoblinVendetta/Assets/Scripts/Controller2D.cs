@@ -21,6 +21,8 @@ public class Controller2D : MonoBehaviour {
 
 	private bool flying = false;
 
+	public AudioClip[] JumpSound;
+
 
 	public float facing {
 		get { return fac; }
@@ -98,6 +100,7 @@ public class Controller2D : MonoBehaviour {
 					//character.rigidbody2D.AddRelativeForce(new Vector2(0, jumpForce));
 					doubleJumped = false;
 					curVel.y = jumpForce;
+					PlayJumpSound();
 				} else if (!doubleJumped) {
 					doubleJumped = true;
 					curVel.y = jumpForce / 2;
@@ -109,5 +112,9 @@ public class Controller2D : MonoBehaviour {
 			character.rigidbody2D.velocity = curVel + t;
 
 		}
+	}
+	void PlayJumpSound()
+	{
+		audio.PlayOneShot(JumpSound[Random.Range(0,JumpSound.Length)]);
 	}
 }
