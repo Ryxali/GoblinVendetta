@@ -21,6 +21,7 @@ public class Controller2D : MonoBehaviour {
 
 	private bool flying = false;
 
+	public AudioClip[] BallistaSound;
 	public AudioClip[] JumpSound;
 
 
@@ -52,6 +53,8 @@ public class Controller2D : MonoBehaviour {
 		GlobalVariables.vars.guitext.text = transform.GetComponent<PlayerState>().stats.description;
 		flying = true;
 		yield return new WaitForSeconds(5);
+		audio.PlayOneShot(BallistaSound[Random.Range(0,BallistaSound.Length)]);
+
 
 		while (transform.position.x < GlobalVariables.vars.landingPosition.x - 10) {
 			float y;

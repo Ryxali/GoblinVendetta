@@ -8,6 +8,7 @@ public class PlayerState : Hitpoints {
 	public AudioClip[] DamageSound;
 	public AudioClip[] DeathSound;
 
+
 	public void SetStats (GoblinStats s)
 	{
 		stats = new GoblinStats(s);
@@ -26,6 +27,8 @@ public class PlayerState : Hitpoints {
 
 	public override void Die() {
 		audio.PlayOneShot(DeathSound[Random.Range(0,DeathSound.Length)]);
+		GlobalVariables.vars.MusicDeath = true;
+		GlobalVariables.vars.guitext.text = "STOPPA LÅTEN";
 		GlobalVariables.vars.playerShouldRespawn = true;
 	}
 
