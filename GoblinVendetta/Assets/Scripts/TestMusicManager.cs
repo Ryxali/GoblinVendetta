@@ -13,7 +13,9 @@ public class TestMusicManager : MonoBehaviour {
 	
 		PaybackTime.Play ();
 		PaybackTime.loop = true;
+		HaremOfDread.loop = false;
 		DeathTheme.loop = false;
+
 	}
 	
 	// Update is called once per frame
@@ -22,9 +24,16 @@ public class TestMusicManager : MonoBehaviour {
 
 		if(GlobalVariables.vars.MusicDeath == true){
 			PaybackTime.Stop();
-			DeathTheme.Play();
+			DeathTheme.PlayDelayed(1);
 			GlobalVariables.vars.MusicDeath = false;
 			StartCoroutine(test());
+		}
+
+		if(GlobalVariables.vars.BossMusic == true){
+			PaybackTime.Stop();
+			HaremOfDread.Play();
+			GlobalVariables.vars.BossMusic = false;
+			StartCoroutine(test2());
 		}
 
 	}
@@ -34,6 +43,16 @@ public class TestMusicManager : MonoBehaviour {
 
 
 		while (DeathTheme.isPlaying == true)
+			yield return null;
+		PaybackTime.Play ();
+		yield return null;
+	}
+
+	IEnumerator test2()
+	{
+		
+		
+		while (HaremOfDread.isPlaying == true)
 			yield return null;
 		PaybackTime.Play ();
 		yield return null;
