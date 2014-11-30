@@ -7,6 +7,8 @@ public class CharacterFollower : MonoBehaviour {
 	public float panSpeed;
 	public float bottom;
 	public float top;
+	public float clipXMin;
+	public float clipXMax;
 	public bool clip {private get; set;}
 	private Vector3 tar = new Vector3();
 	// Use this for initialization
@@ -22,6 +24,8 @@ public class CharacterFollower : MonoBehaviour {
 		if (clip) {
 			tar.y = Mathf.Max (tar.y, bottom);
 			tar.y = Mathf.Min (tar.y, top);
+			tar.x = Mathf.Max (tar.x, clipXMin);
+			tar.x = Mathf.Min (tar.x, clipXMax);
 		}
 		transform.position = Vector3.MoveTowards(
 			transform.position,

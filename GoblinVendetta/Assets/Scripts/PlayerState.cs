@@ -4,14 +4,25 @@ using System.Collections;
 	
 
 public class PlayerState : Hitpoints {
-	public GoblinStats stats = new GoblinStats(1,1,1,1,1,"lol");
+	public GoblinStats stats = new GoblinStats(10,1,10,5,5,"Standard");
 	public AudioClip[] DamageSound;
 	public AudioClip[] DeathSound;
+	public GameObject[] hearts;
 
+	void Awake()
+	{
+		SetStats (stats);
+	}
 
 	public void SetStats (GoblinStats s)
 	{
 		stats = new GoblinStats(s);
+		hp = stats.hp;
+		Vector3 scale = transform.localScale;
+		scale.y = stats.height;
+		transform.localScale = scale;
+		gameObject.GetComponent<Controller2D> ().SetStats (stats);
+		gameObject.GetComponent<FireController> ().SetStats (stats);
 	}
 
 	public GoblinStats GetStats ()
@@ -32,15 +43,14 @@ public class PlayerState : Hitpoints {
 		GlobalVariables.vars.playerShouldRespawn = true;
 	}
 
-	// Use this for initialization
-	void Start () {
-	
+	void Update() {
+		int i = 0;
+		for (; i < hp; ++i)
+			hearts [i].SetActive (true);
+		for (; i < hearts.Length; ++i)
+			hearts [i].SetActive (false);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 	void PlayDamageSound()
 	{
 		audio.PlayOneShot(DamageSound[Random.Range(0,DamageSound.Length)]);

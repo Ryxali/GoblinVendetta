@@ -7,9 +7,9 @@ public class Controller2D : MonoBehaviour {
 	private Vector2 dir;
 	// Current target
 	private Vector3 target;
-	// Current velocity
-	private Vector3 vel;
 	private bool doubleJumped = false;
+	public Animator sprite;
+	public Transform pivot;
 	// Acceleration
 	public float speed = 5;
 	// Terminal leg-providied velocity
@@ -50,20 +50,20 @@ public class Controller2D : MonoBehaviour {
 
 	public IEnumerator Fly ()
 	{
-
+		flying = true;
+		rigidbody2D.velocity = Vector2.zero;
+		sprite.SetTrigger ("Reset");
 		GlobalVariables.vars.camFollower.clip = false;
 		GlobalVariables.vars.guitext.text = transform.GetComponent<PlayerState>().stats.description;
-
-		flying = true;
-
-
 		yield return new WaitForSeconds(3);
+		for (int i = 0; i < GlobalVariables.vars.spawnFolder.transform.childCount; ++i) {
+			Destroy(GlobalVariables.vars.spawnFolder.transform.GetChild(i).gameObject);
+		}
 		audio.PlayOneShot(BallistaSound[Random.Range(0,BallistaSound.Length)]);
 		GlobalVariables.vars.guitext.text = transform.GetComponent<PlayerState>().stats.description;
 		float difference = GlobalVariables.vars.landingPosition.x - transform.position.x;
 		float airtime = 5;
 		float s = difference / airtime;
-
 		while (transform.position.x < GlobalVariables.vars.landingPosition.x - (difference * 0.3f)) {
 			float y;
 			y = Mathf.MoveTowards (transform.position.y, 20, 0.5f);
@@ -85,6 +85,12 @@ public class Controller2D : MonoBehaviour {
 	void Update ()
 	{
 		if (flying == false) {
+			sprite.SetBool("isGrounded", feet.isGrounded);
+			Vector3 f = Vector3.one;
+			if((Screen.width / 2 - Input.mousePosition.x) > 0 )
+				f.x *= -1;
+			pivot.localScale = f;
+
 			Vector3 curVel = new Vector3 ();
 			curVel.x = character.rigidbody2D.velocity.x;
 			curVel.y = character.rigidbody2D.velocity.y;
@@ -106,11 +112,13 @@ public class Controller2D : MonoBehaviour {
 			//character.position = t;
 			if (Input.GetButtonDown ("Jump")) {
 				if (feet.isGrounded) {
+					sprite.SetTrigger("Jump");
 					//character.rigidbody2D.AddRelativeForce(new Vector2(0, jumpForce));
 					doubleJumped = false;
 					curVel.y = jumpForce;
 					PlayJumpSound();
 				} else if (!doubleJumped) {
+					sprite.SetTrigger("DoubleJump");
 					doubleJumped = true;
 					curVel.y += jumpForce / 2;
 					fController.FireDown ();
@@ -119,11 +127,30 @@ public class Controller2D : MonoBehaviour {
 
 
 			character.rigidbody2D.velocity = curVel + t;
+			sprite.SetFloat("xVelocity", character.rigidbody2D.velocity.x);
 
 		}
 	}
 	void PlayJumpSound()
 	{
 		audio.PlayOneShot(JumpSound[Random.Range(0,JumpSound.Length)]);
+	}
+
+	public void SetStats(GoblinStats s)
+	{
+		maxSpeed = s.speed;
+		jumpForce = s.jumpforce;
+	}
+
+	public void Knockback(Vector3 otherpos)
+	{
+		int dir;
+		if (otherpos.x - transform.position.x > 0)
+			dir = -1;
+		else
+			dir = 1;
+		Vector2 vel = rigidbody2D.velocity;
+		vel.x = maxSpeed * dir;
+		rigidbody2D.velocity = vel;
 	}
 }
