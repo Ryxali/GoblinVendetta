@@ -1,8 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+	
+
 public class PlayerState : Hitpoints {
 	public GoblinStats stats = new GoblinStats(1,1,1,1,1,"lol");
+	public AudioClip[] DamageSound;
+	public AudioClip[] DeathSound;
 
 	public void SetStats (GoblinStats s)
 	{
@@ -14,7 +18,14 @@ public class PlayerState : Hitpoints {
 		return stats;
 	}
 
+	public override void Hit (int damage)
+	{
+		PlayDamageSound ();
+		base.Hit (damage);
+	}
+
 	public override void Die() {
+		audio.PlayOneShot(DeathSound[Random.Range(0,DeathSound.Length)]);
 		GlobalVariables.vars.playerShouldRespawn = true;
 	}
 
@@ -27,4 +38,9 @@ public class PlayerState : Hitpoints {
 	void Update () {
 	
 	}
+	void PlayDamageSound()
+	{
+		audio.PlayOneShot(DamageSound[Random.Range(0,DamageSound.Length)]);
+	}
+	
 }
