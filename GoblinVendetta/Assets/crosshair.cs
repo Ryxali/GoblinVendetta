@@ -18,5 +18,7 @@ public class crosshair : MonoBehaviour {
 		Vector3 mPos = GlobalVariables.vars.cam.ScreenToWorldPoint(Input.mousePosition);
 		mPos.z = 0;
 		transform.position = mPos;
+		if (Input.GetKeyDown(KeyCode.Escape))
+			Application.Quit ();
 	}
 }

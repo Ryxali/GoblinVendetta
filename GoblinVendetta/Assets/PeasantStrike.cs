@@ -11,6 +11,7 @@ public class PeasantStrike : MonoBehaviour {
 		present = other.tag == "Player";
 
 		if (other.tag == "Player") {
+			PlayPAttackSound ();
 			GlobalVariables.vars.player.GetComponent<PlayerState>().Hit(1);
 			GlobalVariables.vars.player.GetComponent<Controller2D>().Knockback(transform.position);
 		}
@@ -26,8 +27,8 @@ public class PeasantStrike : MonoBehaviour {
 
 	public IEnumerator Strike() {
 		while (true) {
-			PlayPAttackSound ();
-			yield return new WaitForSeconds (0.4f);
+
+			yield return new WaitForSeconds (1.0f);
 		}
 	}
 

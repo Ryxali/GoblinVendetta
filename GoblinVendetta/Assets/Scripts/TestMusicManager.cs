@@ -50,14 +50,12 @@ public class TestMusicManager : MonoBehaviour {
 
 	IEnumerator test2()
 	{
-		
-		
-		while (HaremOfDread.isPlaying == true)
-			if(GlobalVariables.vars.BossMusicAlive == false){
-			HaremOfDread.Stop();
-		
-		}
+		while (HaremOfDread.isPlaying == true) {
+			if (GlobalVariables.vars.BossMusicAlive == false) {
+				HaremOfDread.Stop ();
+			}
 			yield return null;
+		}
 		PaybackTime.Play ();
 		yield return null;
 	}

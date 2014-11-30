@@ -4,12 +4,14 @@ using System.Collections;
 public class Princess : Hitpoints {
 	// Use this for initialization
 	public Animator sprite;
-	public AudioClip[] PrincessDeathSound;
+	public GameObject gore;
 
 	public override void Die(){
-		audio.PlayOneShot(PrincessDeathSound[Random.Range(0,PrincessDeathSound.Length)]);
-				base.Die ();
-		}
+		//PrincessDeathSound.Play ();
+		GameObject o = (GameObject)Instantiate (gore);
+		o.transform.position = transform.position;
+		base.Die ();
+	}
 	                         
 	void Start () {
 		if (transform.position.x < GlobalVariables.vars.cam.transform.position.x)

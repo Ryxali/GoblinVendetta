@@ -18,12 +18,14 @@ public class Baroness : Hitpoints {
 	public FeetCollider feet;
 	public AudioSource BaronessWhirlwindSound;
 	public AudioClip[] BaronessLungeSound;
-	public AudioClip[] BaronessDeathSound;
+	public GameObject gore;
 
 	//bool Eprincess = false;
 
 	public override void Die (){
-		audio.PlayOneShot(BaronessDeathSound[Random.Range(0,BaronessDeathSound.Length)]);
+		//audio.PlayOneShot(BaronessDeathSound[Random.Range(0,BaronessDeathSound.Length)]);
+		GameObject o = (GameObject)Instantiate (gore);
+		o.transform.position = transform.position;
 		GlobalVariables.vars.BossMusicAlive = false;
 		base.Die ();
 		}
@@ -96,10 +98,11 @@ public class Baroness : Hitpoints {
 
 	IEnumerator Whirlwind ()
 	{
-		yield return null;
 		BaronessWhirlwindSound.Play ();
-
 		sprite.SetTrigger ("Whirlwind_Begin");
+		yield return null;
+
+
 		for (int i = 0; i < 5; i++) {
 			Debug.Log("Woh");
 			while (!feet.isGrounded)
@@ -125,8 +128,9 @@ public class Baroness : Hitpoints {
 		}
 		state = State.normal;
 		BaronessWhirlwindSound.Stop ();
-		sprite.SetTrigger ("Whirlwind_End");
+
 		yield return null;
+		sprite.SetTrigger ("Whirlwind_End");
 	}
 
 	IEnumerator Lunge(int d)
