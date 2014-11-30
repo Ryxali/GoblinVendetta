@@ -13,7 +13,7 @@ public class TestMusicManager : MonoBehaviour {
 	
 		PaybackTime.Play ();
 		PaybackTime.loop = true;
-		HaremOfDread.loop = false;
+		HaremOfDread.loop = true;
 		DeathTheme.loop = false;
 
 	}
@@ -53,6 +53,10 @@ public class TestMusicManager : MonoBehaviour {
 		
 		
 		while (HaremOfDread.isPlaying == true)
+			if(GlobalVariables.vars.BossMusicAlive == false){
+			HaremOfDread.Stop();
+		
+		}
 			yield return null;
 		PaybackTime.Play ();
 		yield return null;
