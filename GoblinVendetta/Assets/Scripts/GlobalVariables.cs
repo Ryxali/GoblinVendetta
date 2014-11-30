@@ -18,6 +18,7 @@ public class GlobalVariables : MonoBehaviour {
 	public CharacterFollower camFollower;
 	public GameObject spawnFolder;
 	public Camera cam;
+	public bool Footsteps = false;
 
 	public float GetPlayerPos()
 	{

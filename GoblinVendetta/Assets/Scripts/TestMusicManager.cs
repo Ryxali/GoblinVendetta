@@ -24,7 +24,7 @@ public class TestMusicManager : MonoBehaviour {
 
 		if(GlobalVariables.vars.MusicDeath == true){
 			PaybackTime.Stop();
-			DeathTheme.PlayDelayed(1);
+			DeathTheme.PlayDelayed(0.5f);
 			GlobalVariables.vars.MusicDeath = false;
 			StartCoroutine(test());
 		}
