@@ -8,21 +8,36 @@ public class Baroness : Hitpoints {
 	public float lungeForce, jumpForce;
 	public int whirlDmg, lungeDmg;
 
+	public int princessSpawnInterval;
+	float nextSpawn;
+	public GameObject princess;
+	public Transform spawnPos1, spawnPos2;
+
 	float currentSpeed;
 	public float speed, whirlSpeed, acceleration;
 
 	public FeetCollider feet;
 
-	void OnTriggerEnter2D (Collider2D other)
+	//bool Eprincess = false;
+
+	void OnCollisionEnter2D (Collision2D other)
 	{
-		if (other.gameObject.ToString() == "Princess") {
-			state = State.whirlwind;
+		if (other.gameObject.tag == "Princess") {
+			Destroy(other.gameObject);
+			//nextSpawn = Time.time + princessSpawnInterval;
+			//Eprincess = false;
+			if (state != State.whirlwind)
+			{
+				state = State.whirlwind;
+				StartCoroutine(Whirlwind());
+			}
 		}
-		else if (other.gameObject.ToString() == "Player") {
+		else if (other.gameObject.tag == "Player") {
 			if (state == State.whirlwind)
 				GlobalVariables.vars.player.GetComponent<PlayerState>().Hit(whirlDmg);
 			else if (state == State.lunge)
 				GlobalVariables.vars.player.GetComponent<PlayerState>().Hit(lungeDmg);
+			GlobalVariables.vars.player.GetComponent<Controller2D>().Knockback(transform.position);
 		}
 	}
 
@@ -53,11 +68,31 @@ public class Baroness : Hitpoints {
 				StartCoroutine (Lunge (direction));
 			}
 		}
+
+		/*if (!Eprincess && nextSpawn < Time.time) {
+			if (Random.Range(0, 2) == 0)
+				Instantiate(princess, spawnPos1.position, spawnPos1.rotation);
+			else 
+				Instantiate(princess, spawnPos2.position, spawnPos2.rotation);
+			Eprincess = true;
+		}*/
+
+		if (nextSpawn < Time.time) {
+			if (Random.Range(0, 2) == 0)
+				Instantiate(princess, spawnPos1.position, spawnPos1.rotation);
+			else 
+				Instantiate(princess, spawnPos2.position, spawnPos2.rotation);
+			nextSpawn = Time.time + princessSpawnInterval;
+		}
+
+
 	}
 
 	IEnumerator Whirlwind ()
 	{
+		yield return null;
 		for (int i = 0; i < 5; i++) {
+			Debug.Log("Woh");
 			while (!feet.isGrounded)
 			{
 				yield return null;
@@ -73,9 +108,9 @@ public class Baroness : Hitpoints {
 			
 			Vector2 vel = rigidbody2D.velocity;
 			vel.x = currentSpeed;
-			rigidbody2D.velocity = vel;
 
-			rigidbody2D.AddForce(jumpForce * Vector2.up);
+			rigidbody2D.velocity = (vel + (jumpForce * Vector2.up));
+			yield return null;
 		}
 		state = State.normal;
 		yield return null;
@@ -87,7 +122,8 @@ public class Baroness : Hitpoints {
 		vel.x = lungeForce * d;
 		rigidbody2D.velocity = vel;
 		yield return new WaitForSeconds(3);
-		state = State.normal;
+		if (state != State.whirlwind)
+			state = State.normal;
 		currentSpeed = 0;
 		yield return null;
 	}

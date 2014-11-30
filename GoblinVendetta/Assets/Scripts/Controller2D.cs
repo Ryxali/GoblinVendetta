@@ -7,8 +7,6 @@ public class Controller2D : MonoBehaviour {
 	private Vector2 dir;
 	// Current target
 	private Vector3 target;
-	// Current velocity
-	private Vector3 vel;
 	private bool doubleJumped = false;
 	// Acceleration
 	public float speed = 5;
@@ -116,5 +114,23 @@ public class Controller2D : MonoBehaviour {
 	void PlayJumpSound()
 	{
 		audio.PlayOneShot(JumpSound[Random.Range(0,JumpSound.Length)]);
+	}
+
+	public void SetStats(GoblinStats s)
+	{
+		maxSpeed = s.speed;
+		jumpForce = s.jumpforce;
+	}
+
+	public void Knockback(Vector3 otherpos)
+	{
+		int dir;
+		if (otherpos.x - transform.position.x > 0)
+			dir = -1;
+		else
+			dir = 1;
+		Vector2 vel = rigidbody2D.velocity;
+		vel.x = maxSpeed * dir;
+		rigidbody2D.velocity = vel;
 	}
 }
