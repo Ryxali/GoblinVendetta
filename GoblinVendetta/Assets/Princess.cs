@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Princess : Hitpoints {
 	// Use this for initialization
+	public Animator sprite;
 	void Start () {
 		if (transform.position.x < GlobalVariables.vars.cam.transform.position.x)
 			rigidbody2D.AddForce(new Vector2(1,1) * Random.Range(100, 400));
@@ -12,6 +13,6 @@ public class Princess : Hitpoints {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		sprite.SetBool ("Flying", rigidbody2D.velocity.y < 0.1);
 	}
 }
