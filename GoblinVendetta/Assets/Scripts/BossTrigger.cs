@@ -4,17 +4,15 @@ using System.Collections;
 public class BossTrigger : MonoBehaviour {
 
 	bool trigged = false;
-	public GameObject spawner;
+	public GameObject[] spawners;
 	public GameObject boss;
 
-	void OnTriggerEnter2D(Collider2D other)
+	void Awake()
 	{
-		if (other.gameObject.name == "Player" && trigged == false)
-		{
-			trigged = true;
-			spawner.SetActive(false);
-			boss.SetActive(true);
-			gameObject.SetActive(false);
+		trigged = true;
+		foreach(GameObject o in spawners) {
+			o.SetActive(false);
 		}
+		gameObject.SetActive(false);
 	}
 }

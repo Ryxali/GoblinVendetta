@@ -6,6 +6,7 @@ public class FireController : MonoBehaviour {
 	public Animator sprite;
 	public AudioClip[] ShootSound;
 	public GameObject projectile;
+	public GameObject explosion;
 	public float recoil = 8;
 	public float projectileSpeed = 8;
 	public float scatter = 1;
@@ -33,6 +34,8 @@ public class FireController : MonoBehaviour {
 			force.x = recoil * t;
 			transform.rigidbody2D.AddRelativeForce(force);
 			force.x = projectileSpeed * -t;
+			GameObject e = (GameObject)Instantiate(explosion);
+			e.transform.position = controller.transform.position + new Vector3(offset.x * -t, offset.y, 0);
 			for(int i = 0; i < projectiles; ++i) {
 
 				GameObject o = (GameObject)Instantiate(projectile);
