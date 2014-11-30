@@ -50,6 +50,10 @@ public class Controller2D : MonoBehaviour {
 
 	public IEnumerator Fly ()
 	{
+
+		GlobalVariables.vars.camFollower.clip = false;
+		GlobalVariables.vars.guitext.text = transform.GetComponent<PlayerState>().stats.description;
+
 		flying = true;
 
 
@@ -74,6 +78,7 @@ public class Controller2D : MonoBehaviour {
 		}
 		flying = false;
 		GlobalVariables.vars.guitext.text = "";
+		GlobalVariables.vars.camFollower.clip = true;
 	}
 	
 	// Update is called once per frame
@@ -107,7 +112,7 @@ public class Controller2D : MonoBehaviour {
 					PlayJumpSound();
 				} else if (!doubleJumped) {
 					doubleJumped = true;
-					curVel.y = jumpForce / 2;
+					curVel.y += jumpForce / 2;
 					fController.FireDown ();
 				}
 			}

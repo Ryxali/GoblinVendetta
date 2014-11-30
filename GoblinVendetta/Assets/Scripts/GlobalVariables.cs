@@ -13,6 +13,7 @@ public class GlobalVariables : MonoBehaviour {
 	public bool shotIsDone = false;
 	public Text guitext;
 	public bool MusicDeath = false;
+	public CharacterFollower camFollower;
 
 	public float GetPlayerPos()
 	{
