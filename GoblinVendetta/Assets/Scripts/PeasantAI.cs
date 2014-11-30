@@ -40,7 +40,6 @@ public class PeasantAI : MonoBehaviour {
 		nPos.x = strike.transform.position.x * direction;
 		nPos.y = strike.transform.position.y;
 		nPos.z = strike.transform.position.z;
-		strike.transform.position = nPos;
 		
 		currentSpeed += acceleration * Time.deltaTime * direction;
 		
