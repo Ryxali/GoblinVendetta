@@ -92,8 +92,10 @@ public class Baroness : Hitpoints {
 			Debug.Log("Woh");
 			while (!feet.isGrounded)
 			{
+				Debug.Log ("Yay");
 				yield return null;
 			}
+			Debug.Log ("Trololo");
 			float difference = transform.position.x - GlobalVariables.vars.GetPlayerPos();
 			int direction;
 			if (difference > 0)
