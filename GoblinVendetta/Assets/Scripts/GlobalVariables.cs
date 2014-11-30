@@ -12,6 +12,7 @@ public class GlobalVariables : MonoBehaviour {
 	public bool playerShouldRespawn = false;
 	public bool shotIsDone = false;
 	public Text guitext;
+	public CharacterFollower camFollower;
 
 	public float GetPlayerPos()
 	{
