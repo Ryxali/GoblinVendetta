@@ -19,6 +19,7 @@ public class Controller2D : MonoBehaviour {
 	public const int LEFT = -1;
 	public const int RIGHT = 1;
 
+	public bool isFlying { get {return flying;}}
 	private bool flying = false;
 
 	public AudioClip[] BallistaSound;

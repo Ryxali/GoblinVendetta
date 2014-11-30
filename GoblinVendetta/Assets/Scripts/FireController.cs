@@ -22,7 +22,7 @@ public class FireController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(canFire && Input.GetButtonDown("Fire1")) {
+		if(canFire && !controller.isFlying && Input.GetButtonDown("Fire1")) {
 			canFire = false;
 			sprite.SetTrigger("Fire");
 			Vector3 force = new Vector3();
