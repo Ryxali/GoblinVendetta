@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PeasantAI : MonoBehaviour {
 
-	private float lastJump;
+	private float lastStrike;
 	private float currentSpeed;
 	private int direction;
 	public float jumpForce = 500;
@@ -24,6 +24,7 @@ public class PeasantAI : MonoBehaviour {
 			direction = -1;
 		else 
 			direction = 1;
+
 		Vector3 nPos = new Vector3 ();
 		nPos.x = strike.transform.position.x * direction;
 		nPos.y = strike.transform.position.y;
