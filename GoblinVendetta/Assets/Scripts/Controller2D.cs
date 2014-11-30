@@ -21,6 +21,7 @@ public class Controller2D : MonoBehaviour {
 
 	private bool flying = false;
 
+	public AudioClip[] BallistaSound;
 	public AudioClip[] JumpSound;
 
 
@@ -49,17 +50,26 @@ public class Controller2D : MonoBehaviour {
 
 	public IEnumerator Fly ()
 	{
+
 		GlobalVariables.vars.camFollower.clip = false;
 		GlobalVariables.vars.guitext.text = transform.GetComponent<PlayerState>().stats.description;
-		flying = true;
-		yield return new WaitForSeconds(5);
 
-		while (transform.position.x < GlobalVariables.vars.landingPosition.x - 10) {
+		flying = true;
+
+
+		yield return new WaitForSeconds(3);
+		audio.PlayOneShot(BallistaSound[Random.Range(0,BallistaSound.Length)]);
+		GlobalVariables.vars.guitext.text = transform.GetComponent<PlayerState>().stats.description;
+		float difference = GlobalVariables.vars.landingPosition.x - transform.position.x;
+		float airtime = 5;
+		float s = difference / airtime;
+
+		while (transform.position.x < GlobalVariables.vars.landingPosition.x - (difference * 0.3f)) {
 			float y;
-			y = Mathf.MoveTowards (transform.position.y, 20, 1);
+			y = Mathf.MoveTowards (transform.position.y, 20, 0.5f);
 			Vector3 vec = new Vector3 (transform.position.x, y, transform.position.z);
 			transform.position = vec;
-			Vector2 vel = Vector2.right * 3;
+			Vector2 vel = Vector2.right * s;
 			transform.rigidbody2D.velocity = vel;
 			yield return null;
 		}

@@ -10,7 +10,7 @@ public class MoneyladyAI : MonoBehaviour {
 	public float speed = 100;
 	public float acceleration = 10;
 
-
+	public AudioClip[] LadyAttackSound;
 	public GameObject projectile;
 	public float projectileSpeed = 10;
 	public float tossInterval = 3;
@@ -35,6 +35,8 @@ public class MoneyladyAI : MonoBehaviour {
 		minEuler = Quaternion.AngleAxis (minAngle, Vector3.forward) * Vector3.up;
 		maxEuler = Quaternion.AngleAxis (maxAngle, Vector3.forward) * Vector3.up;
 		if (Time.time - lastToss > tossInterval) {
+
+			PlayLadyAttackSound();
 			for(int i = 0; i < coinsPerToss; ++i) {
 				GameObject o = (GameObject)Instantiate(projectile);
 				
@@ -72,5 +74,11 @@ public class MoneyladyAI : MonoBehaviour {
 	void Jump ()
 	{
 		rigidbody2D.AddForce(Vector2.up * jumpForce);
+	}
+
+	void PlayLadyAttackSound()
+	{
+		if(LadyAttackSound.Length > 0)
+			audio.PlayOneShot(LadyAttackSound[Random.Range(0,LadyAttackSound.Length)]);
 	}
 }
