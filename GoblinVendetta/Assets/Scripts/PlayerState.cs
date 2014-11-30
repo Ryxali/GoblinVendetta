@@ -7,7 +7,7 @@ public class PlayerState : Hitpoints {
 	public GoblinStats stats = new GoblinStats(1,1,1,1,1,"lol");
 	public AudioClip[] DamageSound;
 	public AudioClip[] DeathSound;
-
+	public GameObject[] hearts;
 
 	public void SetStats (GoblinStats s)
 	{
@@ -32,15 +32,14 @@ public class PlayerState : Hitpoints {
 		GlobalVariables.vars.playerShouldRespawn = true;
 	}
 
-	// Use this for initialization
-	void Start () {
-	
+	void Update() {
+		int i = 0;
+		for (; i < hp; ++i)
+			hearts [i].SetActive (true);
+		for (; i < hearts.Length; ++i)
+			hearts [i].SetActive (false);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 	void PlayDamageSound()
 	{
 		audio.PlayOneShot(DamageSound[Random.Range(0,DamageSound.Length)]);

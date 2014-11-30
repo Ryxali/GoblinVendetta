@@ -3,6 +3,7 @@ using System.Collections;
 //[RequireComponent(Controller2D)]
 public class FireController : MonoBehaviour {
 
+	public Animator sprite;
 	public AudioClip[] ShootSound;
 	public GameObject projectile;
 	public float recoil = 8;
@@ -11,6 +12,7 @@ public class FireController : MonoBehaviour {
 	public int projectiles = 8;
 	public Vector2 offset = new Vector2(1, 1);
 	private Controller2D controller;
+	private bool canFire = true;
 
 	// Use this for initialization
 	void Awake () {
@@ -19,7 +21,9 @@ public class FireController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetButtonDown("Fire1")) {
+		if(canFire && Input.GetButtonDown("Fire1")) {
+			canFire = false;
+			sprite.SetTrigger("Fire");
 			Vector3 force = new Vector3();
 			int t = -1;
 			if((Screen.width / 2 - Input.mousePosition.x) > 0 ) {
@@ -40,6 +44,7 @@ public class FireController : MonoBehaviour {
 			}
 
 		}
+		canFire = !sprite.GetCurrentAnimatorStateInfo (0).IsTag ("fire");
 	}
 
 	public void FireDown() {

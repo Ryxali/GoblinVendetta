@@ -10,6 +10,8 @@ public class Controller2D : MonoBehaviour {
 	// Current velocity
 	private Vector3 vel;
 	private bool doubleJumped = false;
+	public Animator sprite;
+	public Transform pivot;
 	// Acceleration
 	public float speed = 5;
 	// Terminal leg-providied velocity
@@ -50,14 +52,20 @@ public class Controller2D : MonoBehaviour {
 
 	public IEnumerator Fly ()
 	{
+		rigidbody2D.velocity = Vector2.zero;
+		sprite.SetTrigger ("Reset");
 
 		GlobalVariables.vars.camFollower.clip = false;
 		GlobalVariables.vars.guitext.text = transform.GetComponent<PlayerState>().stats.description;
 
 		flying = true;
 
-
+		GameObject g;
+		
 		yield return new WaitForSeconds(3);
+		for (int i = 0; i < GlobalVariables.vars.spawnFolder.transform.childCount; ++i) {
+			Destroy(GlobalVariables.vars.spawnFolder.transform.GetChild(i).gameObject);
+		}
 		audio.PlayOneShot(BallistaSound[Random.Range(0,BallistaSound.Length)]);
 		GlobalVariables.vars.guitext.text = transform.GetComponent<PlayerState>().stats.description;
 		float difference = GlobalVariables.vars.landingPosition.x - transform.position.x;
@@ -85,6 +93,12 @@ public class Controller2D : MonoBehaviour {
 	void Update ()
 	{
 		if (flying == false) {
+			sprite.SetBool("isGrounded", feet.isGrounded);
+			Vector3 f = Vector3.one;
+			if((Screen.width / 2 - Input.mousePosition.x) > 0 )
+				f.x *= -1;
+			pivot.localScale = f;
+
 			Vector3 curVel = new Vector3 ();
 			curVel.x = character.rigidbody2D.velocity.x;
 			curVel.y = character.rigidbody2D.velocity.y;
@@ -106,11 +120,13 @@ public class Controller2D : MonoBehaviour {
 			//character.position = t;
 			if (Input.GetButtonDown ("Jump")) {
 				if (feet.isGrounded) {
+					sprite.SetTrigger("Jump");
 					//character.rigidbody2D.AddRelativeForce(new Vector2(0, jumpForce));
 					doubleJumped = false;
 					curVel.y = jumpForce;
 					PlayJumpSound();
 				} else if (!doubleJumped) {
+					sprite.SetTrigger("DoubleJump");
 					doubleJumped = true;
 					curVel.y += jumpForce / 2;
 					fController.FireDown ();
@@ -119,6 +135,7 @@ public class Controller2D : MonoBehaviour {
 
 
 			character.rigidbody2D.velocity = curVel + t;
+			sprite.SetFloat("xVelocity", character.rigidbody2D.velocity.x);
 
 		}
 	}

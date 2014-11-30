@@ -4,7 +4,7 @@ using System.Collections;
 public class FeetCollider : MonoBehaviour {
 
 	public Rigidbody2D body;
-
+	private int nSurfacesHit = 0;
 	public bool isGrounded { get; private set; }
 	private bool feetTouching = false;
 	void Update() {
@@ -12,10 +12,16 @@ public class FeetCollider : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		feetTouching = true;
+		if(other.gameObject.tag == "Surface") {
+			++nSurfacesHit;
+		}
+		feetTouching = nSurfacesHit > 0;
 	}
 
 	void OnTriggerExit2D(Collider2D other) {
-		feetTouching = false;
+		if (other.gameObject.tag == "Surface") {
+			--nSurfacesHit;
+		}
+		feetTouching = nSurfacesHit > 0;
 	}
 }
