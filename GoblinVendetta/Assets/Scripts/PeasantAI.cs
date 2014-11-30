@@ -10,10 +10,21 @@ public class PeasantAI : MonoBehaviour {
 	public float speed = 100;
 	public float acceleration = 10;
 	public PeasantStrike strike;
+	public float attackspeed = 1;
+
+	private float lastattack = 0;
 	
 	// Use this for initialization
 	void Start () {
 		
+	}
+
+	void OnCollisionEnter(Collision other)
+	{
+		if (other.gameObject.tag == "Player") {
+			GlobalVariables.vars.player.GetComponent<PlayerState>().Hit(1);
+			GlobalVariables.vars.player.GetComponent<Controller2D>().Knockback(transform.position);
+		}
 	}
 	
 	// Update is called once per frame
@@ -40,6 +51,10 @@ public class PeasantAI : MonoBehaviour {
 		Vector2 vel = rigidbody2D.velocity;
 		vel.x = currentSpeed;
 		rigidbody2D.velocity = vel;
+		/*if (lastattack + attackspeed < Time.time) {
+			lastattack = Time.time;
+			StartCoroutine(strike.Strike());
+		}*/
 	}
 	
 	void Jump ()

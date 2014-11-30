@@ -9,6 +9,11 @@ public class PeasantStrike : MonoBehaviour {
 	private bool present = false;
 	void OnTriggerEnter2D(Collider2D other) {
 		present = other.tag == "Player";
+
+		if (other.tag == "Player") {
+			GlobalVariables.vars.player.GetComponent<PlayerState>().Hit(1);
+			GlobalVariables.vars.player.GetComponent<Controller2D>().Knockback(transform.position);
+		}
 	}
 
 	void OnTriggerLeave2D(Collider2D other) {
@@ -18,7 +23,8 @@ public class PeasantStrike : MonoBehaviour {
 	public IEnumerator Strike() {
 		if (present) {
 			PlayPAttackSound();
-			GlobalVariables.vars.player.GetComponent<PlayerState>().Hit(damage);	
+			GlobalVariables.vars.player.GetComponent<PlayerState>().Hit(damage);
+			GlobalVariables.vars.player.GetComponent<Controller2D>().Knockback(GetComponentInParent<Transform>().position);
 		}
 		yield return null;
 	}
