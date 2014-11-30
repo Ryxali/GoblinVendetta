@@ -11,7 +11,7 @@ public class CharacterFollower : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		transform.position = Vector3.MoveTowards(
 			transform.position,
 			target.position,
