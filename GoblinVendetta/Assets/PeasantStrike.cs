@@ -20,13 +20,22 @@ public class PeasantStrike : MonoBehaviour {
 		present = !(other.tag == "Player") && present;
 	}
 
+	void Awake() {
+		StartCoroutine (Strike ());
+	}
+
 	public IEnumerator Strike() {
+<<<<<<< HEAD
 		if (present) {
 			PlayPAttackSound();
 			GlobalVariables.vars.player.GetComponent<PlayerState>().Hit(damage);
 			GlobalVariables.vars.player.GetComponent<Controller2D>().Knockback(GetComponentInParent<Transform>().position);
+=======
+		while (true) {
+			PlayPAttackSound ();
+			yield return new WaitForSeconds (0.4f);
+>>>>>>> master
 		}
-		yield return null;
 	}
 
 	void PlayPAttackSound()
