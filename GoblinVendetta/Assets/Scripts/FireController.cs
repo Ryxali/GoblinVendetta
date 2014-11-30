@@ -68,4 +68,9 @@ public class FireController : MonoBehaviour {
 		if(ShootSound.Length > 0)
 			audio.PlayOneShot(ShootSound[Random.Range(0,ShootSound.Length)]);
 	}
+
+	public void SetStats(GoblinStats s)
+	{
+		projectiles = s.dmg;
+	}
 }

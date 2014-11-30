@@ -17,6 +17,8 @@ public class GlobalVariables : MonoBehaviour {
 	public bool BossMusicAlive = false;
 	public CharacterFollower camFollower;
 	public GameObject spawnFolder;
+	public Camera cam;
+
 	public float GetPlayerPos()
 	{
 		return player.transform.position.x;

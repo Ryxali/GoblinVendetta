@@ -7,8 +7,6 @@ public class Controller2D : MonoBehaviour {
 	private Vector2 dir;
 	// Current target
 	private Vector3 target;
-	// Current velocity
-	private Vector3 vel;
 	private bool doubleJumped = false;
 	public Animator sprite;
 	public Transform pivot;
@@ -52,16 +50,11 @@ public class Controller2D : MonoBehaviour {
 
 	public IEnumerator Fly ()
 	{
+		flying = true;
 		rigidbody2D.velocity = Vector2.zero;
 		sprite.SetTrigger ("Reset");
-
 		GlobalVariables.vars.camFollower.clip = false;
 		GlobalVariables.vars.guitext.text = transform.GetComponent<PlayerState>().stats.description;
-
-		flying = true;
-
-		GameObject g;
-		
 		yield return new WaitForSeconds(3);
 		for (int i = 0; i < GlobalVariables.vars.spawnFolder.transform.childCount; ++i) {
 			Destroy(GlobalVariables.vars.spawnFolder.transform.GetChild(i).gameObject);
@@ -71,7 +64,6 @@ public class Controller2D : MonoBehaviour {
 		float difference = GlobalVariables.vars.landingPosition.x - transform.position.x;
 		float airtime = 5;
 		float s = difference / airtime;
-
 		while (transform.position.x < GlobalVariables.vars.landingPosition.x - (difference * 0.3f)) {
 			float y;
 			y = Mathf.MoveTowards (transform.position.y, 20, 0.5f);
@@ -142,5 +134,23 @@ public class Controller2D : MonoBehaviour {
 	void PlayJumpSound()
 	{
 		audio.PlayOneShot(JumpSound[Random.Range(0,JumpSound.Length)]);
+	}
+
+	public void SetStats(GoblinStats s)
+	{
+		maxSpeed = s.speed;
+		jumpForce = s.jumpforce;
+	}
+
+	public void Knockback(Vector3 otherpos)
+	{
+		int dir;
+		if (otherpos.x - transform.position.x > 0)
+			dir = -1;
+		else
+			dir = 1;
+		Vector2 vel = rigidbody2D.velocity;
+		vel.x = maxSpeed * dir;
+		rigidbody2D.velocity = vel;
 	}
 }
