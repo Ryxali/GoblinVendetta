@@ -12,6 +12,7 @@ public class TestMusicManager : MonoBehaviour {
 	void Start () {
 	
 		PaybackTime.Play ();
+        
 		PaybackTime.loop = true;
 		HaremOfDread.loop = true;
 		DeathTheme.loop = false;

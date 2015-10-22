@@ -53,12 +53,12 @@ public class Controller2D : MonoBehaviour {
 	{
 		flying = true;
 		GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        GetComponent<Rigidbody2D>().Sleep();
+        GetComponent<Rigidbody2D>().simulated = false;
 		sprite.SetTrigger ("Reset");
 		GlobalVariables.vars.camFollower.clip = false;
 		GlobalVariables.vars.guitext.text = transform.GetComponent<PlayerState>().stats.description;
 		yield return new WaitForSeconds(3);
-        GetComponent<Rigidbody2D>().WakeUp();
+        GetComponent<Rigidbody2D>().simulated = true;
 		for (int i = 0; i < GlobalVariables.vars.spawnFolder.transform.childCount; ++i) {
 			Destroy(GlobalVariables.vars.spawnFolder.transform.GetChild(i).gameObject);
 		}
