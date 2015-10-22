@@ -37,7 +37,7 @@ public class PlayerState : Hitpoints {
 	}
 
 	public override void Die() {
-		audio.PlayOneShot(DeathSound[Random.Range(0,DeathSound.Length)]);
+		GetComponent<AudioSource>().PlayOneShot(DeathSound[Random.Range(0,DeathSound.Length)]);
 		GlobalVariables.vars.MusicDeath = true;
 		GlobalVariables.vars.BossMusicAlive = false; 
 		GlobalVariables.vars.BossMusicPlaying = false;
@@ -55,7 +55,7 @@ public class PlayerState : Hitpoints {
 
 	void PlayDamageSound()
 	{
-		audio.PlayOneShot(DamageSound[Random.Range(0,DamageSound.Length)]);
+		GetComponent<AudioSource>().PlayOneShot(DamageSound[Random.Range(0,DamageSound.Length)]);
 	}
 	
 }

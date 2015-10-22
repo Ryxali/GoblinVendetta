@@ -35,7 +35,7 @@ public class PeasantStrike : MonoBehaviour {
 	void PlayPAttackSound()
 	{
 		if(PAttackSound.Length > 0)
-			audio.PlayOneShot(PAttackSound[Random.Range(0,PAttackSound.Length)]);
+			GetComponent<AudioSource>().PlayOneShot(PAttackSound[Random.Range(0,PAttackSound.Length)]);
 	}
 
 }

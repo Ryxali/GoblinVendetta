@@ -32,7 +32,7 @@ public class FireController : MonoBehaviour {
 			}
 			PlayShootSound();
 			force.x = recoil * t;
-			transform.rigidbody2D.AddRelativeForce(force);
+			transform.GetComponent<Rigidbody2D>().AddRelativeForce(force);
 			force.x = projectileSpeed * -t;
 			GameObject e = (GameObject)Instantiate(explosion);
 			e.transform.position = controller.transform.position + new Vector3(offset.x * -t, offset.y, 0);
@@ -43,7 +43,7 @@ public class FireController : MonoBehaviour {
 				off.x *= -t;
 				o.transform.position = controller.transform.position + off;
 
-				o.rigidbody2D.velocity = force;
+				o.GetComponent<Rigidbody2D>().velocity = force;
 			}
 
 		}
@@ -62,14 +62,14 @@ public class FireController : MonoBehaviour {
 			Vector3 off = new Vector3(i * (scatter) - scatter/2, Random.Range(-1, 1)*scatter, 0);
 			o.transform.position = controller.transform.position + off;
 			
-			o.rigidbody2D.velocity = force;
+			o.GetComponent<Rigidbody2D>().velocity = force;
 		}
 	}
 
 	void PlayShootSound()
 	{
 		if(ShootSound.Length > 0)
-			audio.PlayOneShot(ShootSound[Random.Range(0,ShootSound.Length)]);
+			GetComponent<AudioSource>().PlayOneShot(ShootSound[Random.Range(0,ShootSound.Length)]);
 	}
 
 	public void SetStats(GoblinStats s)

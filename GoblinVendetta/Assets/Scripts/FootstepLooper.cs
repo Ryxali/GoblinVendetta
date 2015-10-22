@@ -13,7 +13,7 @@ using System.Collections;
 	// Update is called once per frame
 	void Update () {
 
-		float vX = GlobalVariables.vars.player.rigidbody2D.velocity.x;
+		float vX = GlobalVariables.vars.player.GetComponent<Rigidbody2D>().velocity.x;
 		if(GlobalVariables.vars.Footsteps == true && (vX < -0.1 || 0.1 < vX) && !FootstepLoop.isPlaying){
 			FootstepLoop.Play(); 
 		}

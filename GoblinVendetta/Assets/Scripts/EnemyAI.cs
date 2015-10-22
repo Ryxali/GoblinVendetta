@@ -37,13 +37,13 @@ public class EnemyAI : MonoBehaviour {
 		else if (currentSpeed < -speed)
 			currentSpeed = -speed;
 
-		Vector2 vel = rigidbody2D.velocity;
+		Vector2 vel = GetComponent<Rigidbody2D>().velocity;
 		vel.x = currentSpeed;
-		rigidbody2D.velocity = vel;
+		GetComponent<Rigidbody2D>().velocity = vel;
 	}
 
 	void Jump ()
 	{
-		rigidbody2D.AddForce(Vector2.up * jumpForce);
+		GetComponent<Rigidbody2D>().AddForce(Vector2.up * jumpForce);
 	}
 }

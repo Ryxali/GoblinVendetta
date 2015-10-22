@@ -52,15 +52,17 @@ public class Controller2D : MonoBehaviour {
 	public IEnumerator Fly ()
 	{
 		flying = true;
-		rigidbody2D.velocity = Vector2.zero;
+		GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        GetComponent<Rigidbody2D>().Sleep();
 		sprite.SetTrigger ("Reset");
 		GlobalVariables.vars.camFollower.clip = false;
 		GlobalVariables.vars.guitext.text = transform.GetComponent<PlayerState>().stats.description;
 		yield return new WaitForSeconds(3);
+        GetComponent<Rigidbody2D>().WakeUp();
 		for (int i = 0; i < GlobalVariables.vars.spawnFolder.transform.childCount; ++i) {
 			Destroy(GlobalVariables.vars.spawnFolder.transform.GetChild(i).gameObject);
 		}
-		audio.PlayOneShot(BallistaSound[Random.Range(0,BallistaSound.Length)]);
+		GetComponent<AudioSource>().PlayOneShot(BallistaSound[Random.Range(0,BallistaSound.Length)]);
 		GlobalVariables.vars.guitext.text = transform.GetComponent<PlayerState>().stats.description;
 		float difference = GlobalVariables.vars.landingPosition.x - transform.position.x;
 		float airtime = 5;
@@ -71,7 +73,7 @@ public class Controller2D : MonoBehaviour {
 			Vector3 vec = new Vector3 (transform.position.x, y, transform.position.z);
 			transform.position = vec;
 			Vector2 vel = Vector2.right * s;
-			transform.rigidbody2D.velocity = vel;
+			transform.GetComponent<Rigidbody2D>().velocity = vel;
 			yield return null;
 		}
 		while (!feet.isGrounded) {
@@ -93,8 +95,8 @@ public class Controller2D : MonoBehaviour {
 			pivot.localScale = f;
 
 			Vector3 curVel = new Vector3 ();
-			curVel.x = character.rigidbody2D.velocity.x;
-			curVel.y = character.rigidbody2D.velocity.y;
+			curVel.x = character.GetComponent<Rigidbody2D>().velocity.x;
+			curVel.y = character.GetComponent<Rigidbody2D>().velocity.y;
 
 			dir.x = Input.GetAxis ("Horizontal");
 			dir.y = Input.GetAxis ("Vertical");
@@ -127,14 +129,14 @@ public class Controller2D : MonoBehaviour {
 			}
 
 
-			character.rigidbody2D.velocity = curVel + t;
-			sprite.SetFloat("xVelocity", character.rigidbody2D.velocity.x);
+			character.GetComponent<Rigidbody2D>().velocity = curVel + t;
+			sprite.SetFloat("xVelocity", character.GetComponent<Rigidbody2D>().velocity.x);
 
 		}
 	}
 	void PlayJumpSound()
 	{
-		audio.PlayOneShot(JumpSound[Random.Range(0,JumpSound.Length)]);
+		GetComponent<AudioSource>().PlayOneShot(JumpSound[Random.Range(0,JumpSound.Length)]);
 	}
 
 	public void SetStats(GoblinStats s)
@@ -150,8 +152,8 @@ public class Controller2D : MonoBehaviour {
 			dir = -1;
 		else
 			dir = 1;
-		Vector2 vel = rigidbody2D.velocity;
+		Vector2 vel = GetComponent<Rigidbody2D>().velocity;
 		vel.x = maxSpeed * dir;
-		rigidbody2D.velocity = vel;
+		GetComponent<Rigidbody2D>().velocity = vel;
 	}
 }

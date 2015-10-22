@@ -69,9 +69,9 @@ public class Baroness : Hitpoints {
 			else if (currentSpeed < -speed)
 				currentSpeed = -speed;
 			
-			Vector2 vel = rigidbody2D.velocity;
+			Vector2 vel = GetComponent<Rigidbody2D>().velocity;
 			vel.x = currentSpeed;
-			rigidbody2D.velocity = vel;
+			GetComponent<Rigidbody2D>().velocity = vel;
 
 			//Lunge
 			if ((difference > 0 && difference < lungeDistance) || (difference < 0 && difference > -lungeDistance)) {
@@ -121,10 +121,10 @@ public class Baroness : Hitpoints {
 			
 			currentSpeed = whirlSpeed * direction;
 			
-			Vector2 vel = rigidbody2D.velocity;
+			Vector2 vel = GetComponent<Rigidbody2D>().velocity;
 			vel.x = currentSpeed;
 
-			rigidbody2D.velocity = (vel + (jumpForce * Vector2.up));
+			GetComponent<Rigidbody2D>().velocity = (vel + (jumpForce * Vector2.up));
 			yield return null;
 		}
 		state = State.normal;
@@ -136,11 +136,11 @@ public class Baroness : Hitpoints {
 
 	IEnumerator Lunge(int d)
 	{
-		audio.PlayOneShot(BaronessLungeSound[Random.Range(0,BaronessLungeSound.Length)]);
+		GetComponent<AudioSource>().PlayOneShot(BaronessLungeSound[Random.Range(0,BaronessLungeSound.Length)]);
 		sprite.SetTrigger ("Dash_Begin");
-		Vector2 vel = rigidbody2D.velocity;
+		Vector2 vel = GetComponent<Rigidbody2D>().velocity;
 		vel.x = lungeForce * d;
-		rigidbody2D.velocity = vel;
+		GetComponent<Rigidbody2D>().velocity = vel;
 		yield return new WaitForSeconds(3);
 		if (state != State.whirlwind)
 			state = State.normal;

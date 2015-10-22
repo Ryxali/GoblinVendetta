@@ -11,7 +11,7 @@ public class GoblinSpawner : MonoBehaviour {
 			GlobalVariables.vars.playerState.SetStats(goblinGenerator.Generate(GlobalVariables.vars.playerState.GetStats()));
 			GlobalVariables.vars.landingPosition = GlobalVariables.vars.player.transform.position;
 			GlobalVariables.vars.player.transform.position = GlobalVariables.vars.catapultPosition.position;
-			GlobalVariables.vars.player.rigidbody2D.velocity = Vector3.zero;
+			GlobalVariables.vars.player.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
 			GlobalVariables.vars.playerShouldRespawn = false;
 			StartCoroutine(GlobalVariables.vars.player.GetComponent<Controller2D>().Fly());
 		}

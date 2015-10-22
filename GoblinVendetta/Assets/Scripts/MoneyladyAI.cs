@@ -45,10 +45,10 @@ public class MoneyladyAI : MonoBehaviour {
 					new Vector3(offset.x, offset.y, 0) +
 					Vector3.Lerp(minEuler, maxEuler, (float)i / (float)coinsPerToss) * angleRadius;
 				
-				o.rigidbody2D.velocity = 
+				o.GetComponent<Rigidbody2D>().velocity = 
 					(o.transform.position - transform.position).normalized * 
 					projectileSpeed + 
-					new Vector3(transform.rigidbody2D.velocity.x, transform.rigidbody2D.velocity.y, 0);
+					new Vector3(transform.GetComponent<Rigidbody2D>().velocity.x, transform.GetComponent<Rigidbody2D>().velocity.y, 0);
 			}
 			lastToss = Time.time;
 		}
@@ -66,19 +66,19 @@ public class MoneyladyAI : MonoBehaviour {
 		else if (currentSpeed < -speed)
 			currentSpeed = -speed;
 		
-		Vector2 vel = rigidbody2D.velocity;
+		Vector2 vel = GetComponent<Rigidbody2D>().velocity;
 		vel.x = currentSpeed;
-		rigidbody2D.velocity = vel;
+		GetComponent<Rigidbody2D>().velocity = vel;
 	}
 	
 	void Jump ()
 	{
-		rigidbody2D.AddForce(Vector2.up * jumpForce);
+		GetComponent<Rigidbody2D>().AddForce(Vector2.up * jumpForce);
 	}
 
 	void PlayLadyAttackSound()
 	{
 		if(LadyAttackSound.Length > 0)
-			audio.PlayOneShot(LadyAttackSound[Random.Range(0,LadyAttackSound.Length)]);
+			GetComponent<AudioSource>().PlayOneShot(LadyAttackSound[Random.Range(0,LadyAttackSound.Length)]);
 	}
 }

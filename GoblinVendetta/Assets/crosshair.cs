@@ -14,7 +14,7 @@ public class crosshair : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Screen.showCursor = false;
+		Cursor.visible = false;
 		Vector3 mPos = GlobalVariables.vars.cam.ScreenToWorldPoint(Input.mousePosition);
 		mPos.z = 0;
 		transform.position = mPos;
